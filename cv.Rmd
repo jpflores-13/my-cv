@@ -4,9 +4,9 @@ author: JP Flores
 date: "`r Sys.Date()`"
 output:
   pagedown::html_resume:
-    css: ['css/styles.css', 'resume']
+    css: ['css/custom_resume.css', 'css/styles.css', 'resume']
     # set it to true for a self-contained HTML page but it'll take longer to render
-    self_contained: false
+    self_contained: true
 knit: pagedown::chrome_print
 ---
 
@@ -15,9 +15,8 @@ knitr::opts_chunk$set(
   results='asis', 
   echo = FALSE
 )
-
-library(glue)
 library(tidyverse)
+library(glue)
 
 # ======================================================================
 # These variables determine how the the data is loaded and how the exports are
@@ -40,10 +39,8 @@ sheet_is_publicly_readable <- TRUE
 # document
 PDF_EXPORT <- FALSE
 
-
 CV_PDF_LOC <- "https://github.com/jpflores-13/cv/raw/master/cv.pdf"
 CV_HTML_LOC <- "https://jpflores-13.github.io/cv/cv.html"
-
 
 # A global (gasp) variable that holds all the links that were inserted for
 # placement at the end
@@ -60,77 +57,37 @@ source('cv_printing_functions.R')
 source('gather_data.R')
 ```
 
-```{r}
-# When in export mode the little dots are unaligned, so fix that. 
-if(PDF_EXPORT){
-  cat("
-  <style>
-  :root{
-    --decorator-outer-offset-left: -6.5px;
-  }
-  </style>")
-}
-```
 
-::::: header-block
-:::: header-block-inner
-::: title
-JP Flores
-:::
-::::
-:::::
+Aside
+================================================================================
 
-::: subtitle
-```{r intro}
-  print_text_block(text_blocks, 'intro')
-```
-:::
+![logo](logo.jpg){width=100%}
 
-# Aside
-
-![logo](logo.jpg){width="90%"}
-
-```{r}
-# When in export mode the little dots are unaligned, so fix that. 
-if(PDF_EXPORT){
-  glue("View this CV online with links at _{CV_HTML_LOC}_")
-} else {
-  glue("[<i class='fas fa-download'></i> Download CV as a PDF]({CV_PDF_LOC})")
-}
-```
-
-## Contact {#contact}
+JP FLORES {#contact}
+--------------------------------------------------------------------------------
 
 ```{r}
 contact_info %>% 
   glue_data("- <i class='fa fa-{icon}'></i> {contact}")
 ```
 
-## Skills {#skills}
+Skills {#skills}
+--------------------------------------------------------------------------------
 
 <i class="fab fa-r-project"></i>
 
-<!--i class="fab fa-html5"></i-->
-
 HTML
-
-<!--i class="fab fa-css3-alt"></i-->
 
 CSS
 
-<!--i class="fas fa-code-branch"></i-->
-
 Git
-
-<!--i class="fab fa-adobe"></i-->
 
 Photoshop
 
-<!--i class="fab fa-adobe"></i-->
-
 Illustrator
 
-## Disclaimer {#disclaimer}
+Disclaimer {#disclaimer}
+--------------------------------------------------------------------------------
 
 Made with the R package [**pagedown**](https://github.com/rstudio/pagedown).
 
@@ -138,41 +95,54 @@ Source code available: [github.com/jpflores-13/cv](https://github.com/jpflores-1
 
 Updated: `r Sys.Date()`.
 
-# Main
 
-## JP Flores {#title}
+Main
+================================================================================
 
-## Education {data-icon="graduation-cap" data-concise="true"}
-
-```{r}
-print_section(position_data, 'education')
-```
-
-## Research Experience {data-icon="laptop"}
+JP Flores {#title}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'research_experience')
+print_text_block(text_blocks, 'intro')
 ```
 
-## Professional Experience {data-icon="user-tie"}
+Education {data-icon=graduation-cap data-concise=true}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'professional_experience')
+position_data %>% print_section('education')
 ```
 
-## Awards & Accolades {data-icon="trophy"}
+Research Experience {data-icon=laptop}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'awards_accolades')
+position_data %>% print_section('research_experience')
 ```
 
-## Features & Interviews {data-icon="microphone"}
+Professional Experience {data-icon=user-tie}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'features_interviews')
+position_data %>% print_section('professional_experience')
 ```
 
-## Teaching Experience {data-icon="chalkboard-teacher"}
+Awards & Accolades {data-icon=trophy}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>% print_section('awards_accolades')
+```
+
+Features & Interviews {data-icon=microphone}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>% print_section('features_interviews')
+```
+
+Teaching Experience {data-icon=chalkboard-teacher}
+--------------------------------------------------------------------------------
 
 ::: aside
 ```{r}
@@ -181,16 +151,18 @@ print_text_block(text_blocks, 'teaching_experience_aside')
 :::
 
 ```{r}
-print_section(position_data, 'teaching_experience')
+position_data %>% print_section('teaching_experience')
 ```
 
-## Training & Certifications {data-icon="medal"}
+Training & Certifications {data-icon=medal}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'training')
+position_data %>% print_section('training')
 ```
 
-## Academic Articles {data-icon="book"}
+Academic Articles {data-icon=book}
+--------------------------------------------------------------------------------
 
 ::: aside
 ```{r}
@@ -199,31 +171,35 @@ print_text_block(text_blocks, 'academic_aside')
 :::
 
 ```{r}
-print_section(position_data, 'academic_articles')
+position_data %>% print_section('academic_articles')
 ```
 
-## Non-Academic Articles {data-icon="bookmark"}
+Non-Academic Articles {data-icon=bookmark}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'non_academic_articles')
+position_data %>% print_section('non_academic_articles')
 ```
 
-## Invited Talks / Workshops {data-icon="microphone-alt"}
+Invited Talks / Workshops {data-icon=microphone-alt}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'invited_talks')
+position_data %>% print_section('invited_talks')
 ```
 
-## Poster Presentations {data-icon="microphone-alt"}
+Poster Presentations {data-icon=microphone-alt}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'poster_presentations')
+position_data %>% print_section('poster_presentations')
 ```
 
-## Service {data-icon="heart"}
+Service {data-icon=heart}
+--------------------------------------------------------------------------------
 
 ```{r}
-print_section(position_data, 'service')
+position_data %>% print_section('service')
 ```
 
 ```{r}
