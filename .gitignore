@@ -8,5 +8,3 @@ README.html
 
 # Build artifacts
 cv_files/
-*.html
-!README.html
