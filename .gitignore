@@ -10,4 +10,3 @@ README.html
 cv_files/
 *.html
 !README.html
-*.pdf
