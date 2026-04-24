@@ -77,7 +77,7 @@ Aside
 
 ![logo](logo.jpg){width=100%}
 
-JP FLORES {#contact}
+JP FLORES, PHD {#contact}
 --------------------------------------------------------------------------------
 ```{r}
 contact_info %>% 
