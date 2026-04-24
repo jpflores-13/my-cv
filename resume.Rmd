@@ -50,7 +50,7 @@ links <- c()
 # text output and the other loads up our data from either googlesheets or csvs
 
 # Functions for building sections from CSV data
-source('parsing_functions.R') 
+source('cv_printing_functions.R')
 
 # Load data for CV/Resume
 source('gather_data.R')

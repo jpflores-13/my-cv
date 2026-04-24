@@ -5,3 +5,9 @@ resume_files/
 .secrets
 .DS_Store
 README.html
+
+# Build artifacts
+cv_files/
+*.html
+!README.html
+*.pdf
