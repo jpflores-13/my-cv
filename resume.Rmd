@@ -99,7 +99,7 @@ resume_awards %>% print_resume_awards('awards')
 
 More info {#more-info}
 --------------------------------------------------------------------------------
-See full CV at [jpflores-13.github.io/cv/](https://jpflores-13.github.io/cv/cv.html)
+See full CV at [jpflores-13.github.io/my-cv/](https://jpflores-13.github.io/my-cv/cv.html)
 
 
 Disclaimer {#disclaimer}
@@ -107,7 +107,7 @@ Disclaimer {#disclaimer}
 
 Made w/ [**pagedown**](https://github.com/rstudio/pagedown). 
 
-Source code: [github.com/jpflores-13/cv](https://github.com/jpflores-13/cv).
+Source code: [github.com/jpflores-13/my-cv](https://github.com/jpflores-13/my-cv).
 
 Last updated on `r Sys.Date()`.
 

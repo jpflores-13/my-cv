@@ -39,8 +39,8 @@ sheet_is_publicly_readable <- TRUE
 # document
 PDF_EXPORT <- FALSE
 
-CV_PDF_LOC <- "https://github.com/jpflores-13/cv/raw/master/cv.pdf"
-CV_HTML_LOC <- "https://jpflores-13.github.io/cv/cv.html"
+CV_PDF_LOC <- "https://github.com/jpflores-13/my-cv/raw/master/cv.pdf"
+CV_HTML_LOC <- "https://jpflores-13.github.io/my-cv/cv.html"
 
 # A global (gasp) variable that holds all the links that were inserted for
 # placement at the end
@@ -91,7 +91,7 @@ Disclaimer {#disclaimer}
 
 Made with the R package [**pagedown**](https://github.com/rstudio/pagedown).
 
-Source code available: [github.com/jpflores-13/cv](https://github.com/jpflores-13/cv).
+Source code available: [github.com/jpflores-13/my-cv](https://github.com/jpflores-13/my-cv).
 
 Updated: `r Sys.Date()`.
 
