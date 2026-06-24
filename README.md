@@ -1,6 +1,6 @@
 ## JP Flores, PhD — CV
 
-Personal CV built with [Quarto](https://quarto.org), styled with the JP Flores CV Design System (Barlow + Raleway, ink-on-paper, tan accent), and backed by Google Sheets as the data source.
+Personal CV built with [Quarto](https://quarto.org) and backed by Google Sheets as the data source.
 
 Live at: [jpflores-13.github.io/my-cv](https://jpflores-13.github.io/my-cv)
 
@@ -20,7 +20,7 @@ CV content lives in a [Google Sheet](https://docs.google.com/spreadsheets/d/1kzV
 
 ## Rendering
 
-Rendering happens automatically in CI — you don't render locally or commit `docs/`.
+Rendering happens automatically in CI, no need to render locally or commit `docs/`.
 
 **If you updated a `.qmd` or other source file:**
 ```bash
@@ -31,7 +31,7 @@ git push
 GitHub Actions will render and deploy on push to `master`.
 
 **If you only updated the Google Sheet:**
-No commit needed. The workflow re-renders automatically every Monday at 8am UTC. To trigger it immediately, go to the repo's **Actions tab** → "Publish CV" → **Run workflow**.
+No commit needed. The workflow re-renders automatically every Monday at 8am. To trigger it immediately, go to the repo's **Actions tab** → "Publish CV" → **Run workflow**.
 
 **To preview locally before pushing:**
 ```bash
