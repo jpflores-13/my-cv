@@ -79,8 +79,9 @@ HTML(paste0('<ul class="skills-list">',
 
 ```{r awards}
 awards <- c(
-  "HHMI Gilliam Fellows Program (2024)",
+  "Fulbright Scholar Award (2026–27)",
   "Public Voices Fellow — The OpEd Project & MacArthur Foundation (2025)",
+  "HHMI Gilliam Fellows Program (2024)",
   "ASHG Human Genetics Scholar (2024–2026)",
   "AIBS Emerging Public Policy Leadership Award (2025)",
   "UCLA CDLS Early Career Fellow (2025)",
