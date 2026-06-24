@@ -1,0 +1,41 @@
+name: Publish CV
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '0 8 * * 1'  # every Monday 8am UTC — picks up Sheet changes automatically
+  workflow_dispatch:       # manual trigger from the Actions tab
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('R/cv_functions.R') }}
+          restore-keys: ${{ runner.os }}-r-
+
+      - name: Install R packages
+        shell: Rscript {0}
+        run: install.packages(c("tidyverse", "googlesheets4", "htmltools", "glue"))
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render and publish to gh-pages
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
