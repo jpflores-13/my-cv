@@ -1,29 +1,35 @@
-## JP Flores' pagedown CV
+## JP Flores, PhD — CV
 
-My personal CV and resume built with the [pagedown](https://pagedown.rbind.io) R package, using Google Sheets as the data source.
+Personal CV built with [Quarto](https://quarto.org), styled with the JP Flores CV Design System (Barlow + Raleway, ink-on-paper, tan accent), and backed by Google Sheets as the data source.
 
-Live at: [jpflores-13.github.io/my-cv/cv.html](https://jpflores-13.github.io/my-cv/cv.html)
+Live at: [jpflores-13.github.io/my-cv](https://jpflores-13.github.io/my-cv)
 
 ## Structure
 
-- `cv.Rmd`: Source template for the full CV. Set `PDF_EXPORT` to `TRUE` for a PDF-ready version.
-  - `cv.html`: Rendered HTML output.
-  - `cv.pdf`: Exported PDF.
-- `resume.Rmd`: Source template for the single-page resume.
-  - `resume.html` / `resume.pdf`: Rendered resume outputs.
-- `cv_printing_functions.R`: Helper functions for rendering position entries into HTML.
-- `gather_data.R`: Loads CV data from Google Sheets (or CSVs as a fallback).
-- `csvs/`: CSV versions of the data as a backup to Google Sheets.
-- `css/`: Custom CSS files that modify the default pagedown resume template.
+- `index.qmd` — CV document. Reads from Google Sheets, renders to `docs/index.html`.
+- `_quarto.yml` — Quarto project config (outputs to `docs/`).
+- `cv-styles.css` — Full design system CSS (tokens, layout, print styles).
+- `R/cv_functions.R` — Helper functions: `print_section`, `print_articles_by_field`, `render_md`.
+- `gather_data.R` — Loads CV data from Google Sheets.
+- `jpflores-cv-design/` — Design system reference (tokens, components, UI kit).
+- `docs/` — Built output served by GitHub Pages.
 
 ## Data
 
-CV content is pulled from a Google Sheet. To use your own sheet, update `positions_sheet_loc` in the setup chunk of `cv.Rmd` and `resume.Rmd`.
+CV content lives in a [Google Sheet](https://docs.google.com/spreadsheets/d/1kzVjmxlzmNsFXYa_A9A6OpZcMWZC1zOY62Ra5Xd9OPE/). The `entries` tab includes four classification columns added in 2026: `field`, `type`, `status`, `author_role`. Academic Articles are grouped by `field` (Science · Policy & Outreach · Qualitative) with client-side filter buttons.
 
 ## Rendering
 
-Open `cv.Rmd` or `resume.Rmd` in RStudio and knit. To export a PDF, set `PDF_EXPORT <- TRUE` or use `pagedown::chrome_print()`.
+```bash
+quarto render index.qmd
+```
+
+Then push `docs/` to GitHub. GitHub Pages serves from the `docs/` folder.
+
+## PDF
+
+Click **Download PDF** in the sidebar, or use the browser's print dialog. Filter buttons and other screen-only elements are hidden automatically via `@media print`.
 
 ## Credits
 
-Built on the pagedown CV template originally created by [Nick Strayer](https://github.com/nstrayer/cv) and modified by [dcossyleon](https://github.com/dcossyleon/cv).
+Original pagedown scaffold by [Nick Strayer](https://github.com/nstrayer/cv). Rebuilt as a Quarto site in 2026.

@@ -1,0 +1,15 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "JP Flores, PhD — CV"
+  navbar: false
+
+format:
+  html:
+    theme: none
+    css: cv-styles.css
+    toc: false
+    self-contained: true
+    page-layout: custom

@@ -1,0 +1,237 @@
+---
+format:
+  html:
+    theme: none
+    css: cv-styles.css
+    toc: false
+    self-contained: true
+    page-layout: custom
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r setup}
+library(tidyverse)
+library(glue)
+library(htmltools)
+library(googlesheets4)
+
+using_googlesheets         <- TRUE
+positions_sheet_loc        <- "https://docs.google.com/spreadsheets/d/1kzVjmxlzmNsFXYa_A9A6OpZcMWZC1zOY62Ra5Xd9OPE/edit?usp=sharing"
+sheet_is_publicly_readable <- TRUE
+PDF_EXPORT                 <- FALSE
+links                      <- c()
+
+source("gather_data.R")
+source("R/cv_functions.R")
+```
+
+<div class="cv-page">
+
+<!-- ============================================================
+     SIDEBAR
+     ============================================================ -->
+<aside class="cv-sidebar">
+
+```{r avatar}
+HTML('<img class="cv-avatar" src="logo.jpg" alt="JP Flores">')
+```
+
+<div class="cv-name">JP Flores, PhD</div>
+<div class="cv-pronouns">he/him</div>
+<a class="cv-download no-print" href="#" onclick="window.print(); return false;">↓ Download PDF</a>
+
+<div class="sidebar-section">
+<div class="sidebar-section-head">Contact</div>
+
+```{r contact}
+contacts <- list(
+  list(icon = "mail",     label = "jpflores013@gmail.com",   href = "mailto:jpflores013@gmail.com"),
+  list(icon = "github",   label = "github.com/jpflores-13",   href = "https://github.com/jpflores-13"),
+  list(icon = "link",     label = "jpflores.rbind.io",        href = "https://jpflores.rbind.io"),
+  list(icon = "linkedin", label = "in/john-patrick-flores",   href = "https://linkedin.com/in/john-patrick-flores"),
+  list(icon = "bluesky",  label = "@jpflores.rbind.io",       href = "https://bsky.app/profile/jpflores.rbind.io")
+)
+items <- sapply(contacts, function(c) {
+  paste0("<li>", lucide_icon(c$icon), ' <a href="', c$href, '">', c$label, "</a></li>")
+})
+HTML(paste0('<ul class="contact-list">', paste(items, collapse = "\n"), "</ul>"))
+```
+
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-section-head">Skills</div>
+
+```{r skills}
+skills <- c("R", "Python", "Bash", "HTML", "CSS", "Git", "Photoshop", "Illustrator")
+HTML(paste0('<ul class="skills-list">',
+            paste0("<li>", skills, "</li>", collapse = "\n"),
+            "</ul>"))
+```
+
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-section-head">Select Awards</div>
+
+```{r awards}
+awards <- c(
+  "HHMI Gilliam Fellows Program (2024)",
+  "Public Voices Fellow — The OpEd Project & MacArthur Foundation (2025)",
+  "ASHG Human Genetics Scholar (2024–2026)",
+  "AIBS Emerging Public Policy Leadership Award (2025)",
+  "UCLA CDLS Early Career Fellow (2025)",
+  "NSF Graduate Research Fellow (2021)",
+  "Spotify Next Wave Award Winner (2021)"
+)
+HTML(paste0('<ul class="awards-list">',
+            paste0("<li>", awards, "</li>", collapse = "\n"),
+            "</ul>"))
+```
+
+</div>
+
+<div class="sidebar-disclaimer">
+Built with <a href="https://quarto.org">Quarto</a>.<br>
+Source: <a href="https://github.com/jpflores-13/my-cv">github.com/jpflores-13/my-cv</a><br>
+Updated: `r format(Sys.Date(), "%B %Y")`
+</div>
+
+</aside>
+
+<!-- ============================================================
+     MAIN COLUMN
+     ============================================================ -->
+<main class="cv-main">
+
+<div class="cv-masthead">
+
+```{r intro}
+intro_text <- text_blocks %>% filter(loc == "intro") %>% pull(text)
+if (length(intro_text) > 0 && !is.na(intro_text[1])) {
+  HTML(paste0('<div class="cv-intro">', render_md(intro_text[1]), "</div>"))
+}
+```
+</div>
+
+<!-- Education -->
+<div class="section-header"><h2>Education</h2></div>
+
+```{r education}
+print_section(position_data, "education")
+```
+
+<!-- Research Experience -->
+<div class="section-header"><h2>Research Experience</h2></div>
+
+```{r research}
+print_section(position_data, "research_experience")
+```
+
+<!-- Professional Experience -->
+<div class="section-header"><h2>Professional Experience</h2></div>
+
+```{r professional}
+print_section(position_data, "professional_experience")
+```
+
+<!-- Awards & Accolades -->
+<div class="section-header"><h2>Awards &amp; Accolades</h2></div>
+
+```{r awards-section}
+print_section(position_data, "awards_accolades")
+```
+
+<!-- Features & Interviews -->
+<div class="section-header"><h2>Features &amp; Interviews</h2></div>
+
+```{r features}
+print_section(position_data, "features_interviews")
+```
+
+<!-- Academic Articles -->
+<div class="section-header"><h2>Academic Articles</h2></div>
+
+<div class="articles-filter no-print">
+  <button class="filter-btn active" data-field="All">All</button>
+  <button class="filter-btn" data-field="Science">Science</button>
+  <button class="filter-btn" data-field="Policy &amp; Outreach">Policy &amp; Outreach</button>
+  <button class="filter-btn" data-field="Qualitative">Qualitative</button>
+</div>
+
+```{r articles}
+print_articles_by_field(position_data)
+```
+
+<script>
+(function () {
+  const btns   = document.querySelectorAll('.filter-btn');
+  const groups = document.querySelectorAll('.field-group');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const field = btn.dataset.field;
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      groups.forEach(g => {
+        g.style.display = (field === 'All' || g.dataset.field === field) ? '' : 'none';
+      });
+    });
+  });
+
+  window.addEventListener('beforeprint', () => {
+    groups.forEach(g => g.style.display = '');
+    btns.forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-field="All"]')?.classList.add('active');
+  });
+})();
+</script>
+
+<!-- Non-Academic Articles -->
+<div class="section-header"><h2>Non-Academic Articles</h2></div>
+
+```{r non-academic}
+print_section(position_data, "non_academic_articles")
+```
+
+<!-- Invited Talks -->
+<div class="section-header"><h2>Invited Talks &amp; Workshops</h2></div>
+
+```{r talks}
+print_section(position_data, "invited_talks")
+```
+
+<!-- Poster Presentations -->
+<div class="section-header"><h2>Poster Presentations</h2></div>
+
+```{r posters}
+print_section(position_data, "poster_presentations")
+```
+
+<!-- Teaching -->
+<div class="section-header"><h2>Teaching Experience</h2></div>
+
+```{r teaching}
+print_section(position_data, "teaching_experience")
+```
+
+<!-- Training -->
+<div class="section-header"><h2>Training &amp; Certifications</h2></div>
+
+```{r training}
+print_section(position_data, "training")
+```
+
+<!-- Service -->
+<div class="section-header"><h2>Service</h2></div>
+
+```{r service}
+print_section(position_data, "service")
+```
+
+</main>
+
+</div>
