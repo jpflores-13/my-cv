@@ -8,3 +8,7 @@ README.html
 
 # Build artifacts
 cv_files/
+jpflores-cv-design/
+
+/.quarto/
+**/*.quarto_ipynb

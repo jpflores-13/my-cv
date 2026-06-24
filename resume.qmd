@@ -1,0 +1,154 @@
+---
+format:
+  html:
+    theme: none
+    css: cv-styles.css
+    toc: false
+    self-contained: true
+    page-layout: custom
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r setup}
+library(tidyverse)
+library(glue)
+library(htmltools)
+library(googlesheets4)
+
+using_googlesheets         <- TRUE
+positions_sheet_loc        <- "https://docs.google.com/spreadsheets/d/1kzVjmxlzmNsFXYa_A9A6OpZcMWZC1zOY62Ra5Xd9OPE/edit?usp=sharing"
+sheet_is_publicly_readable <- TRUE
+PDF_EXPORT                 <- FALSE
+links                      <- c()
+
+source("gather_data.R")
+source("R/cv_functions.R")
+
+resume_data <- position_data %>%
+  filter(in_resume == TRUE) %>%
+  mutate(section = case_when(
+    section %in% c("research_experience", "professional_experience") ~ "positions",
+    section %in% c("invited_talks", "academic_articles")             ~ "featured",
+    TRUE ~ section
+  ))
+```
+
+<div class="cv-page">
+
+<!-- ============================================================
+     SIDEBAR
+     ============================================================ -->
+<aside class="cv-sidebar">
+
+```{r avatar}
+HTML('<img class="cv-avatar" src="logo.jpg" alt="JP Flores">')
+```
+
+<div class="cv-name">JP Flores, PhD</div>
+<div class="cv-pronouns">he/him</div>
+<a class="cv-download no-print" href="#" onclick="window.print(); return false;">↓ Download PDF</a>
+
+<div class="sidebar-section">
+<div class="sidebar-section-head">Contact</div>
+
+```{r contact}
+contacts <- list(
+  list(icon = "mail",     label = "jpflores013@gmail.com",   href = "mailto:jpflores013@gmail.com"),
+  list(icon = "github",   label = "github.com/jpflores-13",   href = "https://github.com/jpflores-13"),
+  list(icon = "link",     label = "jpflores.rbind.io",        href = "https://jpflores.rbind.io"),
+  list(icon = "linkedin", label = "in/john-patrick-flores",   href = "https://linkedin.com/in/john-patrick-flores"),
+  list(icon = "bluesky",  label = "@jpflores.rbind.io",       href = "https://bsky.app/profile/jpflores.rbind.io")
+)
+items <- sapply(contacts, function(c) {
+  paste0("<li>", lucide_icon(c$icon), ' <a href="', c$href, '">', c$label, "</a></li>")
+})
+HTML(paste0('<ul class="contact-list">', paste(items, collapse = "\n"), "</ul>"))
+```
+
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-section-head">Skills</div>
+
+```{r skills}
+skill_list <- c("R", "Python", "Bash", "HTML", "CSS", "Git", "Photoshop", "Illustrator")
+HTML(paste0('<ul class="skills-list">',
+            paste0("<li>", skill_list, "</li>", collapse = "\n"),
+            "</ul>"))
+```
+
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-section-head">Awards & Accolades</div>
+
+```{r awards}
+if (exists("resume_awards") && nrow(resume_awards) > 0) {
+  award_rows <- resume_awards %>% filter(section == "awards")
+  desc_cols  <- grep("^description_", names(award_rows), value = TRUE)
+  bullets    <- unlist(award_rows[desc_cols])
+  bullets    <- bullets[!is.na(bullets) & nzchar(trimws(bullets))]
+  items      <- paste0("<li>", sapply(bullets, render_md), "</li>", collapse = "\n")
+  HTML(paste0('<ul class="awards-list">', items, "</ul>"))
+}
+```
+
+</div>
+
+<div class="sidebar-disclaimer">
+<a href="https://jpflores-13.github.io/my-cv/">See full CV →</a><br><br>
+Built with <a href="https://quarto.org">Quarto</a>.<br>
+Updated: `r format(Sys.Date(), "%B %Y")`
+</div>
+
+</aside>
+
+<!-- ============================================================
+     MAIN COLUMN
+     ============================================================ -->
+<main class="cv-main">
+
+<div class="cv-masthead">
+
+```{r intro}
+intro_text <- text_blocks %>% filter(loc == "intro") %>% pull(text)
+if (length(intro_text) > 0 && !is.na(intro_text[1])) {
+  HTML(paste0('<div class="cv-intro">', render_md(intro_text[1]), "</div>"))
+}
+```
+</div>
+
+<!-- Education -->
+<div class="section-header"><h2>Education</h2></div>
+
+```{r education}
+print_section(resume_data, "education")
+```
+
+<!-- Research & Professional Experience -->
+<div class="section-header"><h2>Research &amp; Professional Experience</h2></div>
+
+```{r positions}
+print_section(resume_data, "positions")
+```
+
+<!-- Featured Work -->
+<div class="section-header"><h2>Featured Talks &amp; Publications</h2></div>
+
+```{r featured}
+print_section(resume_data, "featured")
+```
+
+<!-- Awards -->
+<div class="section-header"><h2>Awards &amp; Accolades</h2></div>
+
+```{r awards-section}
+print_section(resume_data, "awards_accolades")
+```
+
+</main>
+
+</div>
