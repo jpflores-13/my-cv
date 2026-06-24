@@ -245,7 +245,8 @@ a:hover { text-decoration: underline; color: var(--ink-900); }
 .cv-download {
   display: block;
   text-align: center;
-  margin: 10px 0 0;
+  width: 120px;
+  margin: 10px auto 0;
   padding: 6px 14px;
   background: var(--ink-900);
   color: var(--paper-0);
