@@ -1,4 +1,4 @@
-## JP Flores, PhD — CV
+## JP Flores CV Workflow
 
 Personal CV built with [Quarto](https://quarto.org) and backed by Google Sheets as the data source.
 
