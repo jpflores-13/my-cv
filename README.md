@@ -20,11 +20,23 @@ CV content lives in a [Google Sheet](https://docs.google.com/spreadsheets/d/1kzV
 
 ## Rendering
 
-```bash
-quarto render index.qmd
-```
+Rendering happens automatically in CI — you don't render locally or commit `docs/`.
 
-Then push `docs/` to GitHub. GitHub Pages serves from the `docs/` folder.
+**If you updated a `.qmd` or other source file:**
+```bash
+git add <changed files>
+git commit -m "your message"
+git push
+```
+GitHub Actions will render and deploy on push to `master`.
+
+**If you only updated the Google Sheet:**
+No commit needed. The workflow re-renders automatically every Monday at 8am UTC. To trigger it immediately, go to the repo's **Actions tab** → "Publish CV" → **Run workflow**.
+
+**To preview locally before pushing:**
+```bash
+quarto preview
+```
 
 ## PDF
 
