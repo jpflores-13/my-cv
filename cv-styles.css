@@ -412,6 +412,47 @@ a:hover { text-decoration: underline; color: var(--ink-900); }
 /* ============================================================
    PRINT
    ============================================================ */
+@media (max-width: 640px) {
+  body { padding: 0; }
+
+  .cv-page {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+    box-shadow: none;
+  }
+
+  .cv-sidebar {
+    padding: 24px 20px 28px;
+  }
+
+  .cv-avatar {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 12px;
+  }
+
+  .cv-download {
+    width: 140px;
+    margin-top: 14px;
+  }
+
+  .cv-main {
+    padding: 24px 20px 40px;
+  }
+
+  .cv-masthead h1 {
+    font-size: 22px;
+  }
+
+  .entry {
+    grid-template-columns: 1fr;
+  }
+
+  .entry-date {
+    margin-bottom: 2px;
+  }
+}
+
 @media print {
   body { background: white; font-size: 11px; padding: 0; }
   .cv-page { box-shadow: none; max-width: 100%; }
