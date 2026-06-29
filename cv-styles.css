@@ -462,7 +462,11 @@ a:hover { text-decoration: underline; color: var(--ink-900); }
     min-height: unset;
   }
 
-  .cv-sidebar { padding: 20px 16px 30px; }
+  .cv-sidebar {
+    padding: 20px 16px 30px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
   .cv-avatar  { width: 90px; height: 90px; }
   .cv-main    { padding: 24px 30px 40px 28px; }
 
