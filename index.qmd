@@ -39,9 +39,9 @@ source("R/cv_functions.R")
 HTML('<img class="cv-avatar" src="logo.jpg" alt="JP Flores">')
 ```
 
-<div class="cv-name">JP Flores, PhD</div>
+<h1 class="cv-name">JP Flores, PhD</h1>
 <div class="cv-pronouns">he/him</div>
-<a class="cv-download no-print" href="#" onclick="window.print(); return false;">↓ Download PDF</a>
+<button type="button" class="cv-download no-print" onclick="window.print()">↓ Download PDF</button>
 
 <div class="sidebar-section">
 <div class="sidebar-section-head">Contact</div>
@@ -156,11 +156,11 @@ print_section(position_data, "features_interviews")
 <!-- Academic Articles -->
 <div class="section-header"><h2>Academic Articles</h2></div>
 
-<div class="articles-filter no-print">
-  <button class="filter-btn active" data-field="All">All</button>
-  <button class="filter-btn" data-field="Science">Science</button>
-  <button class="filter-btn" data-field="Policy &amp; Outreach">Policy &amp; Outreach</button>
-  <button class="filter-btn" data-field="Qualitative">Qualitative</button>
+<div class="articles-filter no-print" role="group" aria-label="Filter academic articles by field">
+  <button class="filter-btn active" data-field="All" aria-pressed="true">All</button>
+  <button class="filter-btn" data-field="Science" aria-pressed="false">Science</button>
+  <button class="filter-btn" data-field="Policy &amp; Outreach" aria-pressed="false">Policy &amp; Outreach</button>
+  <button class="filter-btn" data-field="Qualitative" aria-pressed="false">Qualitative</button>
 </div>
 
 ```{r articles}
@@ -175,8 +175,12 @@ print_articles_by_field(position_data)
   btns.forEach(btn => {
     btn.addEventListener('click', () => {
       const field = btn.dataset.field;
-      btns.forEach(b => b.classList.remove('active'));
+      btns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       groups.forEach(g => {
         g.style.display = (field === 'All' || g.dataset.field === field) ? '' : 'none';
       });
@@ -185,8 +189,13 @@ print_articles_by_field(position_data)
 
   window.addEventListener('beforeprint', () => {
     groups.forEach(g => g.style.display = '');
-    btns.forEach(b => b.classList.remove('active'));
-    document.querySelector('[data-field="All"]')?.classList.add('active');
+    btns.forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    const allBtn = document.querySelector('[data-field="All"]');
+    allBtn?.classList.add('active');
+    allBtn?.setAttribute('aria-pressed', 'true');
   });
 })();
 </script>

@@ -18,6 +18,7 @@
   --paper-50:  #fcfbf8;
   --paper-100: #f6f2ea;
 
+  --tan-700: #8a5a1f; /* AA-compliant (5.8:1 on paper-50/0) text variant of tan-600 */
   --tan-600: #c9863b;
   --tan-500: #e6ae6c;
   --tan-400: #edc28c;
@@ -48,7 +49,7 @@ body {
 }
 
 a {
-  color: var(--tan-600);
+  color: var(--tan-700);
   text-decoration: none;
 }
 a:hover { text-decoration: underline; color: var(--ink-900); }
@@ -255,8 +256,10 @@ a:hover { text-decoration: underline; color: var(--ink-900); }
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  border: none;
   border-radius: 6px;
   text-decoration: none;
+  cursor: pointer;
   transition: background 0.15s ease;
 }
 .cv-download:hover {
@@ -324,7 +327,7 @@ a:hover { text-decoration: underline; color: var(--ink-900); }
 }
 
 .entry-loc {
-  color: var(--ink-300);
+  color: var(--ink-500);
 }
 
 .entry-bullets {
@@ -348,7 +351,7 @@ a:hover { text-decoration: underline; color: var(--ink-900); }
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--tan-600);
+  color: var(--tan-700);
   margin: 18px 0 10px 0;
   padding-left: 88px;
 }
@@ -457,12 +460,16 @@ a:hover { text-decoration: underline; color: var(--ink-900); }
   body { background: white; font-size: 11px; padding: 0; }
   .cv-page { box-shadow: none; max-width: 100%; }
 
+  /* Linearize to a single column so PDF text-extraction (ATS parsers)
+     reads name/contact/skills, then body sections, in order instead of
+     interleaving the two columns line-by-line. */
   .cv-page {
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 1fr;
     min-height: unset;
   }
 
   .cv-sidebar {
+    border-bottom: 2px solid var(--ink-900);
     padding: 20px 16px 30px;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;

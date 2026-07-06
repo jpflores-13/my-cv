@@ -47,9 +47,9 @@ resume_data <- position_data %>%
 HTML('<img class="cv-avatar" src="logo.jpg" alt="JP Flores">')
 ```
 
-<div class="cv-name">JP Flores, PhD</div>
+<h1 class="cv-name">JP Flores, PhD</h1>
 <div class="cv-pronouns">he/him</div>
-<a class="cv-download no-print" href="#" onclick="window.print(); return false;">↓ Download PDF</a>
+<button type="button" class="cv-download no-print" onclick="window.print()">↓ Download PDF</button>
 
 <div class="sidebar-section">
 <div class="sidebar-section-head">Contact</div>

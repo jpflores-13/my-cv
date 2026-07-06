@@ -125,7 +125,7 @@ lucide_icon <- function(name, size = 13) {
   if (name == "bluesky") {
     return(paste0(
       '<svg xmlns="http://www.w3.org/2000/svg" width="', size, '" height="', size,
-      '" viewBox="0 0 24 24" fill="currentColor">',
+      '" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">',
       '<path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.26.828 1.677.116 2.098-.023 2.54.004 3.52c.03 1.044.114 4.14.285 5.243.542 3.51 2.496 4.553 4.494 4.777 3.124.355 5.898-1.278 5.898-1.278-.028.27-.062.54-.084.808C10.32 16.127 8.1 17.51 5.9 19.4c-1.067.915-1.64 2.28-1.64 3.6 0 2.21 1.79 4 4 4 1.655 0 3.08-.998 3.72-2.432C12.64 23.003 12.91 22 12.91 22h.18s.27 1.003.93 2.568C14.66 25.002 16.085 26 17.74 26c2.21 0 4-1.79 4-4 0-1.32-.573-2.685-1.64-3.6-2.2-1.89-4.42-3.273-4.697-6.248-.022-.268-.056-.538-.084-.808 0 0 2.774 1.633 5.898 1.278 1.998-.224 3.952-1.267 4.494-4.777.171-1.103.255-4.199.285-5.243.027-.98-.112-1.422-.824-1.843-.733-.417-1.738-.733-4.374 1.128C14.047 4.747 13.087 8.686 12 10.8Z"/>',
       '</svg>'
     ))
@@ -141,6 +141,6 @@ lucide_icon <- function(name, size = 13) {
   paste0(
     '<svg xmlns="http://www.w3.org/2000/svg" width="', size, '" height="', size,
     '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"',
-    ' stroke-linecap="round" stroke-linejoin="round">', inner, '</svg>'
+    ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">', inner, '</svg>'
   )
 }
