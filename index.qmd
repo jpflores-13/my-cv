@@ -200,6 +200,13 @@ print_articles_by_field(position_data)
 })();
 </script>
 
+<!-- Peer Review Record -->
+<div class="section-header"><h2>Peer Review Record</h2></div>
+
+```{r peer-review}
+print_section(position_data, "peer_review")
+```
+
 <!-- Non-Academic Articles -->
 <div class="section-header"><h2>Non-Academic Articles</h2></div>
 

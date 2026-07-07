@@ -142,6 +142,13 @@ print_section(resume_data, "positions")
 print_section(resume_data, "featured")
 ```
 
+<!-- Peer Review Record -->
+<div class="section-header"><h2>Peer Review Record</h2></div>
+
+```{r peer-review}
+print_section(resume_data, "peer_review")
+```
+
 <!-- Awards -->
 <div class="section-header"><h2>Awards &amp; Accolades</h2></div>
 
