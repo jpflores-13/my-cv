@@ -6,7 +6,11 @@ project:
 
 website:
   title: "JP Flores, PhD — CV"
+  site-url: "https://jpflores-13.github.io/my-cv"
   navbar: false
+  open-graph: true
+  twitter-card: true
+  image: "social-preview.png"
 
 format:
   html:
